@@ -14,8 +14,8 @@ public class MainTests extends BaseConfig {
     void testOpeningPage() {
         objectPage.checkTextInTitle();
     }
-    @Test
     @Disabled("Отключен потому что на странице находятся ошибки")
+    @Test
     @DisplayName("Проверка критических ошибок в консоли на главной")
     void testConsoleLog() {
         objectPage.checkErrorsInConsole();
