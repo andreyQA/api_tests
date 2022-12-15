@@ -8,73 +8,41 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.openqa.selenium.logging.LogType.BROWSER;
 
 public class ObjectPage {
-    public ObjectPage checkTextInTitle() {
-        step("Open url hh.ru", () ->
-            open("/"));
-
-        step("Page title should have text 'Работа в Москве, поиск персонала и публикация вакансий - hh.ru'", () -> {
-            String expectedTitle = "Работа в Москве, поиск персонала и публикация вакансий - hh.ru";
+    public ObjectPage openMainPage() {
+        step("Открыть url hh.ru", () ->
+                open("/"));
+    return this;
+    }
+    public ObjectPage checkTextInTitle(String title) {
+        step("Заголовок страницы должен содержать текст " + title, () -> {
             String actualTitle = title();
-
-            assertThat(actualTitle).isEqualTo(expectedTitle);
+            assertThat(actualTitle).isEqualTo(title);
         });
     return this;
     }
-    public ObjectPage checkErrorsInConsole() {
-        step("Open url hh.ru", () ->
-            open("/"));
-
-        step("Console logs should not contain text 'SEVERE'", () -> {
+    public ObjectPage checkErrorsInConsole(String errorText) {
+        step("В консоли не должно быть ошибок типа " + errorText, () -> {
 
             String consoleLogs = String.join("\n", Selenide.getWebDriverLogs(BROWSER));
-            String errorText = "SEVERE";
 
             assertThat(consoleLogs).doesNotContain(errorText);
         });
     return this;
     }
-    public ObjectPage checkLoginButton() {
-            step("Open url hh.ru", () ->
-                open("/"));
-
-            step("Click on the Login button", () -> {
-                $("a[data-qa='login']").click();
-            });
-            step("Check title", () -> {
-                String expectedTitle = "Вход в личный кабинет";
-                String actualTitle = title();
-
-                assertThat(actualTitle).isEqualTo(expectedTitle);
-            });
+    public ObjectPage clickOnButton(String selector) {
+        step("Нажатие на " + selector, () -> {
+            $(selector).click();
+        });
+    return this;
+    }
+    public ObjectPage setInfoToSearchField(String query) {
+            step("Ввод " + query +  "в поле поиска", () ->
+                $("input[data-qa='search-input']").setValue(query));
         return this;
         }
-    public ObjectPage checkSignUpButton() {
-            step("Open url hh.ru", () ->
-                open("/"));
-
-            step("Click on the Signup button", () -> {
-                $("a[data-qa='signup']").click();
-            });
-            step("Check title", () -> {
-                String expectedTitle = "Регистрация соискателя";
-                String actualTitle = title();
-
-                assertThat(actualTitle).isEqualTo(expectedTitle);
-            });
-        return this;
-        }
-    public ObjectPage checkSearchInput() {
-            step("Open url hh.ru", () ->
-                open("/"));
-
-            step("Input 'QA' to search field", () ->
-                $("input[data-qa='search-input']").setValue("QA"));
-
-            step("Submit query", () ->
-                $("button[data-qa='search-button']").click());
-
-            step("Check first vacancy's title for expected query", () ->
-                $("a[data-qa='serp-item__title']").shouldHave(text("QA")));
+    public ObjectPage checkQueryOnVacanciesPage(String query) {
+        step("Проверка заголовка первой вакансии на наличие текста запроса", () ->
+                $("a[data-qa='serp-item__title']").shouldHave(text(query)));
         return this;
         }
     }

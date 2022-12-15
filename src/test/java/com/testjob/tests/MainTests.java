@@ -12,27 +12,37 @@ public class MainTests extends BaseConfig {
     @Test
     @DisplayName("Проверка тайтла на главной")
     void testOpeningPage() {
-        objectPage.checkTextInTitle();
+        objectPage.openMainPage();
+        objectPage.checkTextInTitle("Работа в Москве, поиск персонала и публикация вакансий - hh.ru");
     }
     @Disabled("Отключен потому что на странице находятся ошибки")
     @Test
     @DisplayName("Проверка критических ошибок в консоли на главной")
     void testConsoleLog() {
-        objectPage.checkErrorsInConsole();
+        objectPage.openMainPage();
+        objectPage.checkErrorsInConsole("SEVERE");
     }
     @Test
     @DisplayName("Проверка перехода на страницу авторизации")
     void checkLoginButton() {
-        objectPage.checkLoginButton();
+        objectPage.openMainPage();
+        objectPage.clickOnButton("a[data-qa='login']");
+        objectPage.checkTextInTitle("Вход в личный кабинет");
     }
     @Test
     @DisplayName("Проверка перехода на страницу регистрации")
     void checkSignUpButton() {
-        objectPage.checkSignUpButton();
+        objectPage.openMainPage();
+        objectPage.clickOnButton("a[data-qa='signup']");
+        objectPage.checkTextInTitle("Регистрация соискателя");
     }
     @Test
     @DisplayName("Проверка поиска вакансии")
     void checkSearchInput() {
-        objectPage.checkSearchInput();
+        String query = "QA";
+        objectPage.openMainPage();
+        objectPage.setInfoToSearchField(query);
+        objectPage.clickOnButton("button[data-qa='search-button']");
+        objectPage.checkQueryOnVacanciesPage(query);
     }
 }

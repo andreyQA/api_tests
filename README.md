@@ -53,9 +53,9 @@ gradle clean test
 ```bash
 gradle clean test
 -Dbrowser=${browser}
--DbrowserVersion=${browserVersion}
--DbrowserSize=${browserSize}
--DremoteUrl=${remoteUrl}
+-Dbrowser_version=${browserVersion}
+-Dbrowser_size=${browserSize}
+-Dremote_url=${remoteUrl}
 -Dthreads=${THREADS}
 ```
 
