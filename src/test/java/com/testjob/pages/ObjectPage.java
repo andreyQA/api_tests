@@ -36,7 +36,7 @@ public class ObjectPage {
     return this;
     }
     public ObjectPage setInfoToSearchField(String query) {
-            step("Ввод " + query +  "в поле поиска", () ->
+            step("Ввод " + query +  " в поле поиска", () ->
                 $("input[data-qa='search-input']").setValue(query));
         return this;
         }
